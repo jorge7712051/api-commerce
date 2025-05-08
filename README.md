@@ -1,6 +1,6 @@
-# 🩺 API de Gestión de Pacientes - NestJS
+# 🛠️ API de Gestión Comercial - NestJS + Prisma
 
-Una API RESTful desarrollada con **NestJS**, que permite registrar, consultar y analizar comerciantes,usuarios y establecimientos. Utilizando **PostgreSQL**, **Docker**, **JWT**, y documentación integrada con **Swagger**.
+Una API RESTful desarrollada con **NestJS**, que permite registrar, consultar y analizar **comerciantes**, **usuarios** y **establecimientos**, utilizando **PostgreSQL**, **Prisma ORM**, **Docker**, **JWT**, y documentación interactiva con **Swagger**.
 
 ---
 
@@ -58,8 +58,8 @@ POST /auth/login
 Content-Type: application/json
 
 {
-  "username": "admin",
-  "password": "admin"
+    "email":"admin@crm.com",
+    "password":"admin123"
 }
 ```
 
@@ -70,12 +70,11 @@ Content-Type: application/json
 ## 🧠 Stack principal
 
 - [NestJS](https://nestjs.com/)
-- [TypeORM](https://typeorm.io/)
+- [PrismaOrm](https://www.prisma.io/)
 - [PostgreSQL](https://www.postgresql.org/)
 - [Swagger](https://swagger.io/)
 - [Docker](https://www.docker.com/)
 - [JWT](https://jwt.io/)
-- [OpenAI API](https://platform.openai.com/)
 
 ---
 
@@ -100,7 +99,7 @@ Dockerfile
 
 ## ✅ TODOs
 
-- [x] CRUD de comercientes
+- [x] CRUD de comerciantes
 - [x] Seguridad con JWT
 - [x] Docker y migraciones automáticas
 
