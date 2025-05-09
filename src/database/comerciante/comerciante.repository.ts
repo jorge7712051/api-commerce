@@ -9,7 +9,7 @@ export class ComercianteRepository {
   constructor(private readonly prisma: PrismaService) {}
 
   async findAllPaginated(filter: IFilterComerciantes) {
-    const { nombre, estado, fechaRegistro, page = 1 } = filter;
+    const { nombre, estado, fechaRegistro, page = 1, perPage = 5 } = filter;
     const where: Prisma.ComercianteWhereInput = {};
 
     if (nombre) where.nombre = { contains: nombre, mode: 'insensitive' };
@@ -25,7 +25,7 @@ export class ComercianteRepository {
       this.prisma.comerciante.findMany({
         where,
         skip: (page - 1) * NUMBER_REGISTERS_PER_PAGE,
-        take: 5,
+        take: perPage,
         orderBy: { id: 'asc' },
       }),
       this.prisma.comerciante.count({ where }),
@@ -58,7 +58,7 @@ export class ComercianteRepository {
     return result.map((r) => r.municipio);
   }
 
-  async findActivosConEstadisticas() {
+  async findByActive() {
     return this.prisma.comerciante.findMany({
       where: { estado: Estado.ACTIVO },
       include: {

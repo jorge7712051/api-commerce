@@ -12,10 +12,14 @@ import {
 import { Estado } from '@prisma/client';
 import { PassThrough } from 'stream';
 import * as fastcsv from 'fast-csv';
+import { EstablecimientoRepository } from '../../database/establecimiento/establecimiento.repository';
 
 @Injectable()
 export class ComerciantesService {
-  constructor(private readonly repo: ComercianteRepository) {}
+  constructor(
+    private readonly repo: ComercianteRepository,
+    private readonly establecimientoRepository: EstablecimientoRepository,
+  ) {}
 
   async getComerciantes(
     filter: FilterComerciantesDto,
@@ -48,7 +52,6 @@ export class ComerciantesService {
   async create(dto: CreateComercianteDto, userId: number) {
     return this.repo.create({
       ...dto,
-      fechaRegistro: new Date(),
       usuarioActualizacion: { connect: { id: userId } },
     });
   }
@@ -74,9 +77,8 @@ export class ComerciantesService {
     return this.repo.delete(id);
   }
 
-  async generarCsvComerciantesActivos(): Promise<NodeJS.ReadableStream> {
-    const comerciantes = await this.repo.findActivosConEstadisticas();
-    console.log(comerciantes);
+  async generateFile(): Promise<NodeJS.ReadableStream> {
+    const comerciantes = await this.repo.findByActive();
     const rows = comerciantes.map((c) => {
       const cantidadEstablecimientos = c.establecimientos.length;
       const totalIngresos = c.establecimientos.reduce(
@@ -111,5 +113,9 @@ export class ComerciantesService {
       .pipe(stream);
 
     return stream;
+  }
+
+  async getEstablecimientosByComercialId(id: number) {
+    return this.establecimientoRepository.findByComercianteId(id);
   }
 }

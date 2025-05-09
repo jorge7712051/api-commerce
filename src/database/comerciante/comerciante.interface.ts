@@ -5,6 +5,7 @@ export interface IFilterComerciantes {
   fechaRegistro?: string;
   estado?: Estado;
   page?: number;
+  perPage?: number;
 }
 
 export interface IComerciante {

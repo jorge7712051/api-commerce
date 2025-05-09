@@ -4,9 +4,11 @@ import {
   IsEnum,
   IsNotEmpty,
   IsString,
+  IsDate,
 } from 'class-validator';
 import { Estado } from '@prisma/client';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { Type } from 'class-transformer';
 
 export class CreateComercianteDto {
   @ApiProperty({ example: 'Gimnasio FitLife' })
@@ -32,4 +34,9 @@ export class CreateComercianteDto {
   @ApiProperty({ enum: Estado })
   @IsEnum(Estado)
   estado: Estado;
+
+  @ApiProperty({ example: '2023-10-01' })
+  @IsDate()
+  @Type(() => Date)
+  fechaRegistro: Date;
 }

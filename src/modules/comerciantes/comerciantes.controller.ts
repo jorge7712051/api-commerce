@@ -36,6 +36,7 @@ import {
 import { CurrentUser } from '../../auth/current-user.decorator';
 import { Roles } from '../../auth/roles.decorator';
 import { Response } from 'express';
+import { EstablecimientoResponseDto } from './dto/establecimiento-response-dto';
 
 @ApiTags('Comerciantes')
 @ApiBearerAuth()
@@ -72,8 +73,8 @@ export class ComerciantesController {
     summary: 'Exportar comerciantes activos a archivo .csv (solo ADMIN)',
   })
   @ApiResponse({ status: 200, description: 'Archivo generado correctamente' })
-  async exportarCsv(@Res() res: Response) {
-    const stream = await this.service.generarCsvComerciantesActivos();
+  async generateFile(@Res() res: Response) {
+    const stream = await this.service.generateFile();
 
     res.setHeader('Content-Type', 'text/csv');
     res.setHeader(
@@ -133,5 +134,19 @@ export class ComerciantesController {
   @Delete(':id')
   async delete(@Param('id', ParseIntPipe) id: number): Promise<IComerciante> {
     return this.service.delete(id);
+  }
+
+  @ApiResponse({
+    status: 201,
+    description: 'Login successful',
+    type: EstablecimientoResponseDto,
+    isArray: true,
+  })
+  @ApiOperation({ summary: 'Listar establecimientos de un comerciante' })
+  @Get(':id/establecimientos')
+  async getEstablecimientos(
+    @Param('id', ParseIntPipe) id: number,
+  ): Promise<EstablecimientoResponseDto[]> {
+    return this.service.getEstablecimientosByComercialId(+id);
   }
 }

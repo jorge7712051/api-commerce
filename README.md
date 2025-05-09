@@ -37,7 +37,7 @@ docker-compose up -d
 
 5. **Importe la coleccion de postman**
 
-Si esta usando Postman importe el archivo **hospital-3-astronautas.postman_collection.json**.
+Si esta usando Postman importe el archivo **COMMERCE-TEST.postman_collection.json**.
 
 ---
 

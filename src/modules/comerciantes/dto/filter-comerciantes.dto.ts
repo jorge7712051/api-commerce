@@ -44,6 +44,15 @@ export class FilterComerciantesDto {
   @IsOptional()
   @IsInt()
   page?: number;
+
+  @ApiPropertyOptional({
+    description: 'Número de registros por página (por defecto 5)',
+    example: 5,
+  })
+  @Type(() => Number)
+  @IsOptional()
+  @IsInt()
+  perPage?: number;
 }
 
 export class UpdateEstadoDto {

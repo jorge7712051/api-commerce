@@ -9,6 +9,5 @@ export const EnvConfiguration = () => ({
     port: process.env.SERVICE_PORT,
     jwt: process.env.JWT_SECRET,
     jwt_expired: process.env.JWT_EXPIRED,
-    open_api: process.env.OPENAI_API_KEY,
   },
 });
