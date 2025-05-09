@@ -13,6 +13,8 @@ services:
       - ${DB_PORT}:${DB_PORT}
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    networks:
+      - app-network
 
   backend:
     build: .
@@ -27,6 +29,12 @@ services:
     env_file: .env
 
     command: sh -c "npx prisma migrate deploy && npm run seed && npm run start:dev"
+    networks:
+      - app-network
 
 volumes:
   postgres_data:
+
+networks:
+  app-network:
+    name: app-network
